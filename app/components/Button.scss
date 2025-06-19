@@ -1,0 +1,25 @@
+.button {
+  background-color: #fb2e86;
+  color: #fff;
+  font-size: 1.6rem;
+  gap: 0.8rem;
+  border-radius: 0.8rem;
+  padding: 1.6rem 4rem;
+  width: max-content;
+  height: max-content;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &--green {
+    background-color: #0cc562;
+  }
+
+  &--icon {
+    background-color: #e5e0fc;
+    padding: 1rem;
+    border-radius: 100%;
+  }
+}

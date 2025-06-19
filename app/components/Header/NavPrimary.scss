@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+.navPrimary {
+  display: flex;
+  padding: 1rem 11rem;
+  align-items: center;
+  font-size: 1.6rem;
+  gap: 8rem;
+
+  @media screen and (max-width: 1080px) {
+    padding: 1rem 4rem;
+    gap: 4rem;
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+
+  .logo {
+    width: 9.4rem;
+    height: 2.8rem;
+    resize: none;
+  }
+
+  .main {
+    display: flex;
+    align-items: center;
+    align-items: center;
+    gap: 3rem;
+
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    letter-spacing: 0rem;
+    color: #101750;
+
+    .active-item {
+      color: #fb2e86;
+    }
+  }
+
+  .aligner {
+    margin-left: auto;
+  }
+
+  .search {
+    border: 0.1rem solid #e5e0fc;
+    padding: 0.2rem;
+    padding-left: 1.6rem;
+    width: 32.8rem;
+    font-weight: 50;
+    display: flex;
+    border-radius: 0.8rem;
+    
+
+    input {
+      color: #8a8fb9;
+      font-size: 1.4rem;
+
+      &::placeholder {
+        color: inherit;
+      }
+    }
+
+    svg {
+      margin-left: auto;
+    }
+  }
+}
