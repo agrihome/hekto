@@ -1,4 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+body {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  letter-spacing: 0px;
+  color: #8a8fb9;
+}
 
 h1 {
   font-weight: 700;
@@ -29,4 +39,40 @@ h3 {
   letter-spacing: 1.5%;
   text-transform: capitalize;
   color: #1a0b5b;
+}
+
+.title-small {
+  font-family: Josefin Sans, sans-serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  letter-spacing: 0px;
+  color: #151875;
+}
+
+.title-medium {
+  font-family: Josefin Sans, sans-serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  line-height: 2.8rem;
+  letter-spacing: 0px;
+  color: #151875;
+}
+
+.label-bold {
+  font-family: Josefin Sans, sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  letter-spacing: 0px;
+  color: #fb2e86;
+}
+
+.label-small {
+  font-family: Josefin Sans,sans-serif;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  letter-spacing: 0px;
+  color: #8a8fb9;
 }

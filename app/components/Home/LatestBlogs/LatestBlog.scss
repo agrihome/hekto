@@ -1,0 +1,54 @@
+.lb {
+  padding: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  justify-content: center;
+
+  &__blogs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 41.6rem);
+    place-content: center;
+    gap: 2rem;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    transition: all 0.3s ease-in-out;
+    padding-inline: 2rem;
+  }
+
+  &__blog {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0.8rem 2.4rem 3.2rem -1.6rem #10175026;
+    padding-bottom: 2rem;
+    border-radius: 2%;
+
+    &:hover {
+      transform: translateY(-2rem);
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 25.5rem;
+    object-fit: cover;
+    border-radius: 2%;
+  }
+
+  &__author {
+    display: flex;
+    gap: 5rem;
+
+    p {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+}

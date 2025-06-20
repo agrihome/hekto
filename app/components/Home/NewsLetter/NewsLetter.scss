@@ -1,0 +1,13 @@
+.nl {
+  min-height: 43.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  padding-inline: 22%;
+
+  background-image: url(./NewsLetter.png);
+  background-size: cover;
+  background-position: bottom left;
+}
