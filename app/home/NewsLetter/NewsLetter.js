@@ -1,5 +1,6 @@
 import "./NewsLetter.scss";
-import Button from "../../Button";
+import Button from "@/app/components/Button";
+
 
 export default function NewsLetter() {
   return (

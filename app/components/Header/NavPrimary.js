@@ -40,7 +40,7 @@ export default function NavPrimary() {
           <Link href="/" className="active-item">Home</Link>
         </li>
         <li>
-          <Link href="/">Products</Link>
+          <Link href="/products">Products</Link>
         </li>
         <li>
           <Link href="/">Blog</Link>

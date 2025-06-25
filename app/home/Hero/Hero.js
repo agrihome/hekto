@@ -2,7 +2,8 @@ import Image from "next/image";
 import HeroSecImg from "./HeroSecImg.png";
 import HeroImg from "./HeroImg.png";
 import "./Hero.scss";
-import Button from "../../Button";
+import Button from "@/app/components/Button";
+
 
 export default function Hero() {
   return (
@@ -23,6 +24,13 @@ export default function Hero() {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est
           adipiscing in phasellus non in justo.
         </p>
+        <div className="hero__mini-img-wrapper">
+          <Image
+            src={HeroImg}
+            alt="A description of the image"
+            className="hero__mini-img"
+          />
+        </div>
         <Button>Shop Now</Button>
       </div>
       <div className="hero__img-wrapper">
@@ -30,6 +38,7 @@ export default function Hero() {
           src={HeroImg}
           alt="A description of the image"
           className="hero__img"
+          priority
         />
       </div>
 

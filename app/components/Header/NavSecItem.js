@@ -4,7 +4,7 @@ import style from "./NavSec.module.scss";
 export default function NavSecItem({ children, className }) {
   return (
     <li className={`${className || ""}`}>
-      <Link href="/" className={`${style.navSecItem} `}>{children}</Link>
+      <span className={`${style.navSecItem} `}>{children}</span>
     </li>
   );
 }

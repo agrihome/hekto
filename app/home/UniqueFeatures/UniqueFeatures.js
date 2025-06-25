@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Chair from "./chair.png";
 import "./UniqueFeatures.scss";
-import Button from "../../Button";
+import Button from "@/app/components/Button";
+
 
 export default function UniqueFeatures() {
   return (
@@ -36,6 +37,14 @@ export default function UniqueFeatures() {
             <span>Arms, backs and seats are structurally reinforced</span>
           </div>
         </div>
+
+        <div className="uf__mini-img-container">
+        <Image
+          alt="chair"
+          src={Chair}
+          className="uf__mini-img"
+        />
+      </div>
 
         <div className="uf__cart">
           <Button>Add To Cart</Button>

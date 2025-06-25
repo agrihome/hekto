@@ -5,7 +5,8 @@ import Fp1 from "./fp1.jpg";
 import Fp2 from "./fp2.png";
 import Fp3 from "./fp3.png";
 import Fp4 from "./fp4.png";
-import Button from "../../Button";
+import Button from "@/app/components/Button";
+
 
 export default function FeatureProducts() {
   const products = [

@@ -55,7 +55,7 @@ export default function LatestBlog({ heading, para, img }) {
             21 August, 2023
           </p>
         </div>
-        <p className="title-small">{heading}</p>
+        <p className="title-extra-small">{heading}</p>
         <p>{para}</p>
         <p className="label-bold">Read More</p>
       </div>

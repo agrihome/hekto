@@ -1,6 +1,7 @@
 import Image from "next/image";
 import "./TopCategories.scss";
-import Button from "../../Button";
+import Button from "@/app/components/Button";
+
 
 export default function TopCategory({ name, img }) {
   return (

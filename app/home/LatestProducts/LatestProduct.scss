@@ -29,7 +29,7 @@
   &__products {
     display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fit,30.4rem)   ;
+    grid-template-columns: repeat(auto-fit,41.6rem)   ;
     place-content: center;
   }
 
@@ -40,7 +40,7 @@
   &__img-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 30.4/23.2;
+    aspect-ratio: 41.6/27.2;
   }
 
   .lp__img {

@@ -1,4 +1,4 @@
-import Button from "../../Button";
+import Button from "@/app/components/Button";
 import Image from "next/image";
 import Headphones from "./Headphones.png";
 import "./DiscountItems.scss";
@@ -44,6 +44,8 @@ export default function DiscountItems() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu eget
             feugiat habitasse nec, bibendum condimentum.
           </p>
+          <Image src={Headphones} alt={"headphones"} className="di__mini-img" />
+
           <div className="di__features">
             {paragraphs.map((para, index) => {
               return (

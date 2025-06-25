@@ -9,6 +9,11 @@
   overflow: hidden;
   background-color: #f2f0ff;
 
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 100%;
+    padding: 10%;
+  }
+
   h1 {
     @media screen and (max-width: 1200px) {
       font-size: 3.5rem;
@@ -35,6 +40,20 @@
     }
   }
 
+  &__mini-img-wrapper {
+    display: none;
+   
+    @media screen and (max-width: 900px) {
+      display: block;
+    }
+  }
+
+  &__mini-img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+  }
+
   &__sec-img-wrapper {
     position: absolute;
     top: 0px;
@@ -42,12 +61,26 @@
     width: 20%;
     height: auto;
     transform: translateX(-15%);
+
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
+  }
+
+  &__img-wrapper {
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
   }
 
   &__img {
     width: 100%;
     height: auto;
     object-fit: cover;
+
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
   }
 
   &__dots {

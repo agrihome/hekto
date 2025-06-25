@@ -48,6 +48,10 @@
       min-width: 5.2rem;
       min-height: 3.6rem;
     }
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
   }
 
   .bar {
@@ -65,6 +69,7 @@
   left: 0;
   top: 0;
   width: 100dvw;
+  height: 100dvh;
 }
 
 .sidebar {
