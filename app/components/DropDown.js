@@ -1,9 +1,30 @@
+import { useState,useRef } from "react";
 import "./Dropdown.scss";
 
-export default function Dropdown({ children }) {
+export default function Dropdown({ options, setValue }) {
+  const [selected, setSelected] = useState(options[0]);
+  const [displayOptions, setDisplayOptions] = useState(false);
+  const buttonRef = useRef();
+
+  function handleOptionClick(e) {
+    e.preventDefault();
+    const option = e.target.dataset.option;
+
+    setSelected(option);
+    setValue(option);
+
+    buttonRef.current.blur();
+  }
+
   return (
-    <div className="dropdown">
-      {children}
+    <button
+      ref={buttonRef}
+      className="dropdown"
+      onClick={() => {
+        setDisplayOptions((prev) => !prev);
+      }}
+    >
+      {selected}
       <svg
         width="16"
         height="16"
@@ -19,6 +40,16 @@ export default function Dropdown({ children }) {
           strokeLinejoin="round"
         />
       </svg>
-    </div>
+
+      <div className="options">
+        {options.map((option) => {
+          return (
+            <p key={option} onClick={handleOptionClick} data-option={option}>
+              {option}
+            </p>
+          );
+        })}
+      </div>
+    </button>
   );
 }

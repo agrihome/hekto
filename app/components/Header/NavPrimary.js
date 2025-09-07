@@ -37,16 +37,24 @@ export default function NavPrimary() {
 
       <div className="main">
         <li>
-          <Link href="/" className="active-item">Home</Link>
+          <Link href="/" className="item">
+            Home
+          </Link>
         </li>
         <li>
-          <Link href="/products">Products</Link>
+          <Link href="/products" className="item">
+            Products
+          </Link>
         </li>
         <li>
-          <Link href="/">Blog</Link>
+          <Link href="/blog" className="item">
+            Blog
+          </Link>
         </li>
         <li>
-          <Link href="/">Contact</Link>
+          <Link href="/contact" className="item">
+            Contact
+          </Link>
         </li>
       </div>
 

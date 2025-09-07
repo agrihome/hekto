@@ -6,6 +6,8 @@
   display: flex;
   align-items: center;
   gap: 3rem;
+  max-width: 1920px;
+  margin-inline: auto;
 
   @media screen and (max-width: 1080px) {
     padding: 0.8rem 2rem;
@@ -22,7 +24,11 @@
     align-items: center;
 
     &--aligner {
-       margin-left: auto;
+      margin-left: auto;
     }
   }
+}
+
+.navSecWrapper {
+  background-color: #7e33e0;
 }

@@ -8,7 +8,7 @@ import TrendingProduct from "./TrendingProduct";
 export default function TrendingProducts() {
   const trendingProducts = [
     {
-      name: "Black watches",
+      name: "Black Watches",
       price_main: "$35.00",
       price_sub: "$55.00",
       img: tp2,

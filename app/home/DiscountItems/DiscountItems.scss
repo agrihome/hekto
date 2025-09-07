@@ -5,10 +5,37 @@
   align-items: center;
   place-content: center;
   justify-items: center;
+  position: relative;
+
+  .ellipse1 {
+    position: absolute;
+    z-index: 3;
+    right: -28%;
+    top: 0%;
+    width: 47rem;
+    height: 47rem;
+    left: 60%;
+
+    @media screen and (max-width: 1200px) {
+      display: none;
+    }
+  }
+
+  .ellipse2 {
+    position: absolute;
+    z-index: 2;
+    width: 31.6rem;
+    height: 31.6rem;
+    top: -4%;
+    left: 75%;
+
+    @media screen and (max-width: 1200px) {
+      display: none;
+    }
+  }
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: 1fr;
-
   }
 
   &__container {
@@ -16,6 +43,8 @@
     display: flex;
     flex-direction: column;
     gap: 5rem;
+    max-width: 1600px;
+    margin-inline: auto;
   }
 
   &__nav {
@@ -57,6 +86,7 @@
     grid-row: 1/5;
     max-width: 500px;
     object-fit: cover;
+    z-index: 4;
 
     @media screen and (max-width: 1024px) {
       display: none;
@@ -68,9 +98,9 @@
     height: auto;
     object-fit: cover;
     align-self: center;
-    display:none;
+    display: none;
 
-     @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1024px) {
       display: block;
     }
   }

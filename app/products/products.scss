@@ -4,6 +4,10 @@
   flex-direction: column;
   gap: 3rem;
 
+  @media screen and (max-width: 850px) {
+    padding: 3rem 2rem;
+  }
+
   &__nav {
     display: flex;
     align-items: center;
@@ -20,40 +24,151 @@
 
   &__controls {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: end;
     gap: 5rem;
+
+    @media screen and (max-width: 1024px) {
+      gap: 2rem;
+    }
+
+    @media screen and (max-width: 1024px) {
+      justify-content: space-between;
+      padding-inline: 3rem;
+      margin-top: 2rem;
+    }
 
     .per-page {
       display: flex;
       align-items: center;
       gap: 1.6rem;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
     }
 
     .sort-by {
       display: flex;
       align-items: center;
       gap: 1.6rem;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
     }
 
     .view {
       display: flex;
       align-items: center;
       gap: 1.6rem;
+      width: max-content;
+
+      svg {
+        cursor: pointer;
+      }
+    }
+
+    .filter {
+      display: none;
+      align-items: center;
+
+      @media screen and (max-width: 1024px) {
+        display: flex;
+      }
+
+      &__sort {
+        display: none;
+
+        @media screen and (max-width: 1024px) {
+          display: block;
+        }
+      }
+
+      svg {
+        margin-left: 2rem;
+      }
     }
   }
 
   &__content {
     display: grid;
     grid-template-columns: 17rem 1fr;
+    position: relative;
+    align-items: start;
+
+    @media screen and (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
     gap: 5rem;
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 
   &__filter {
     display: flex;
     flex-direction: column;
     gap: 5rem;
+    // transition: opacity 0.3s ease-in-out, tranform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    padding-top: 1rem;
+
+    @media screen and (max-width: 1024px) {
+      position: absolute;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border: 0.1rem solid #101726;
+      width: 100%;
+    }
+
+    .per-page {
+      display: none;
+      align-items: center;
+      gap: 1.6rem;
+
+      @media screen and (max-width: 1024px) {
+        display: flex;
+      }
+    }
+
+    .sort-by {
+      display: none;
+      align-items: center;
+      gap: 1.6rem;
+
+      @media screen and (max-width: 1024px) {
+        display: flex;
+      }
+    }
+  }
+
+  .close {
+    display: none;
+    position: absolute;
+    right: 0%;
+    top: -3%;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .hide {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-120%);
+    }
+
+    .show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0%);
+
+      .close {
+        display: block;
+        position: absolute;
+        right: -3%;
+        top: -3%;
+      }
+    }
   }
 
   &__filter-category-container {
@@ -66,6 +181,7 @@
     position: relative;
     display: inline-block;
     width: max-content;
+    text-transform: capitalize;
 
     &::after {
       content: "";
@@ -88,17 +204,230 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  &__tick {
-    display: none;
-
-    &--active {
-      display: block;
-    }
+    cursor: pointer;
   }
 
   &__container {
-    display: grid;
+    &--1 {
+      display: grid;
+      max-height: min-content;
+      gap: 3.2rem;
+      align-items: start;
+
+      @media screen and (max-width: 720px) {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      @media screen and (max-width: 600px) {
+        grid-template-columns: 1fr;
+      }
+
+      .product {
+        &__card {
+          display: grid;
+          grid-template-columns: 28.8rem 1fr;
+          padding: 1rem;
+          box-shadow: 0.8rem 2.4rem 3.2rem -1.6rem #10175026;
+          max-width: 1060px;
+
+          @media screen and (max-width: 720px) {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        &__img {
+          width: 100%;
+          aspect-ratio: 28.8/20;
+          height: 100%;
+        }
+
+        &__details {
+          padding: 2rem;
+          display: grid;
+          grid-template-columns: auto auto;
+          grid-template-rows: auto auto auto 1fr;
+          row-gap: 1.5rem;
+        }
+
+        &__name {
+          grid-row: 1/2;
+          grid-column: 1/2;
+          align-self: center;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        &__rating {
+          grid-row: 1/2;
+          grid-column: 2/3;
+          justify-self: self-end;
+          display: flex;
+          gap: 0.8rem;
+          align-self: center;
+        }
+
+        &__price {
+          display: flex;
+          gap: 1.5rem;
+          grid-row: 2/3;
+          grid-column: 1/3;
+          align-items: center;
+
+          .maxPrice {
+            text-decoration: line-through;
+          }
+        }
+
+        &__description {
+          grid-column: 1/3;
+        }
+
+        &__actions {
+          display: flex;
+          gap: 2.4rem;
+          align-self: self-end;
+
+          svg {
+            cursor: pointer;
+          }
+
+          .tick {
+            animation: scale-down 0.5s ease-in-out forwards;
+          }
+        }
+      }
+    }
+
+    &--2 {
+      display: grid;
+      gap: 3.2rem;
+      grid-template-columns: repeat(auto-fit, 31rem);
+      height: fit-content;
+
+      @media screen and (max-width: 1415px) {
+        grid-template-columns: repeat(auto-fit, 25rem);
+      }
+
+      @media screen and (max-width: 1024px) {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      @media screen and (max-width: 850px) {
+        gap: 0rem;
+      }
+
+      @media screen and (max-width: 750px) {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .product {
+        &__card {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          padding: 1rem;
+          box-shadow: 0.8rem 2.4rem 3.2rem -1.6rem #10175026;
+        }
+
+        &__img {
+          width: 100%;
+          aspect-ratio: 28.8/20;
+          object-fit: cover;
+          max-height: 100%;
+          height: 100%;
+        }
+
+        &__details {
+          padding: 2rem;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto 1fr;
+          row-gap: 1.8rem;
+        }
+
+        &__name {
+          grid-row: 1/2;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        &__rating {
+          grid-row: 2/3;
+          display: flex;
+          gap: 0.8rem;
+        }
+
+        &__price {
+          display: flex;
+          gap: 1.5rem;
+          grid-row: 3/4;
+          align-items: center;
+
+          .maxPrice {
+            text-decoration: line-through;
+          }
+        }
+
+        &__description {
+          @media screen and (max-width: 1415px) {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50ch;
+          }
+        }
+
+        &__actions {
+          display: flex;
+          gap: 2.4rem;
+          align-self: self-end;
+
+          .tick {
+            animation: scale-down 0.5s ease-in-out forwards;
+          }
+
+          svg {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4rem;
+
+    &-item {
+      cursor: pointer;
+      width: 3.2rem;
+      height: 3.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &--active {
+        background-color: #fc5fa2;
+        color: white;
+        border-radius: 0.8rem;
+      }
+    }
+  }
+}
+
+@keyframes scale-down {
+  0% {
+    transform: scale(200%);
+  }
+
+  100% {
+    transform: scale(100%);
   }
 }

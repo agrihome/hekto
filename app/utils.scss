@@ -2,4 +2,20 @@
   text-align: center;
 }
 
+.margin-auto {
+  margin-inline: auto;
+  display: block;
+}
 
+.mt-5 {
+  margin-top: 3rem;
+}
+
+.color-black {
+  color: rgba(16, 23, 80, 1);
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
+}

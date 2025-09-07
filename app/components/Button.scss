@@ -8,6 +8,7 @@
   width: max-content;
   height: max-content;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.05);

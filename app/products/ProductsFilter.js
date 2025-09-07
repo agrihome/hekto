@@ -1,10 +1,12 @@
 import ProductFilterHeading from "./ProductsFilterHeading";
 import ProductsFilterOptions from "./ProductFilterOption";
+import { SortBy, PerPage } from "./ProductControls";
 
-export default function ProductsFilter() {
-  const filters = [
+
+export default function ProductsFilter({ ref }) {
+  const filtersData = [
     {
-      category: "Product Brand",
+      category: "brand",
       options: ["Casio", "Sony", "Apple", "Vke", "Glossiness"],
       fill: {
         inActive: "#DDD6FF",
@@ -12,7 +14,7 @@ export default function ProductsFilter() {
       },
     },
     {
-      category: "Discount Offer",
+      category: "discount",
       options: ["20% Cashback", "5% Cashback Offer", "25% Discount Offer"],
       fill: {
         inActive: "#FEB9C4",
@@ -20,14 +22,14 @@ export default function ProductsFilter() {
       },
     },
     {
-      category: "Rating",
+      category: "rating",
       fill: {
         inActive: "#FFF3CE",
         active: "#F9BA00",
       },
     },
     {
-      category: "Categories",
+      category: "category",
       options: [
         "Watches",
         "Headphones",
@@ -43,7 +45,7 @@ export default function ProductsFilter() {
       },
     },
     {
-      category: "Price",
+      category: "price",
       options: [
         "$0 - $150",
         "$150 - $350",
@@ -59,8 +61,11 @@ export default function ProductsFilter() {
   ];
 
   return (
-    <div className="products__filter">
-      {filters.map((filter) => {
+    <div className="products__filter hide" ref={ref}>
+      <SortBy />
+      <PerPage />
+
+      {filtersData.map((filter) => {
         return (
           <div
             className="products__filter-category-container"
@@ -68,11 +73,15 @@ export default function ProductsFilter() {
           >
             <ProductFilterHeading>{filter.category}</ProductFilterHeading>
 
-            {filter.category != "Rating" && (
+            {filter.category != "rating" && (
               <div className="products__filter-options">
                 {filter.options.map((option) => {
                   return (
-                    <ProductsFilterOptions key={option} fill={filter.fill}>
+                    <ProductsFilterOptions
+                      key={option}
+                      fill={filter.fill}
+                      category={filter.category}
+                    >
                       {option}
                     </ProductsFilterOptions>
                   );
@@ -80,13 +89,14 @@ export default function ProductsFilter() {
               </div>
             )}
 
-            {filter.category === "Rating" && (
+            {filter.category === "rating" && (
               <div className="products__filter-options">
                 {[5, 4, 3, 2, 1].map((rating) => (
                   <ProductsFilterOptions
                     key={rating}
-                    rating={rating}
+                    category={filter.category}
                     fill={filter.fill}
+                    rating={rating}
                   >
                     {[...Array(5)].map((_, index) => (
                       <svg
@@ -117,6 +127,28 @@ export default function ProductsFilter() {
           </div>
         );
       })}
+      <button
+        className="close"
+        onClick={(e) => {
+          ref.current.className = "products__filter hide";
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          width="24"
+          height="24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
     </div>
   );
 }

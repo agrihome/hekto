@@ -10,18 +10,22 @@ export default function TopCategories() {
     {
       img: tc1,
       name: "Perfume",
+      category: "Perfume",
     },
     {
       img: tc2,
       name: "Present box",
+      category: "Clothe",
     },
     {
       img: tc4,
       name: "Bracelet",
+      category: "Jewellery",
     },
     {
       img: tc3,
       name: "Ring",
+      category: "Jewellery",
     },
   ];
 
@@ -36,6 +40,7 @@ export default function TopCategories() {
               img={product.img}
               name={product.name}
               key={product.name}
+              category={product.category}
             />
           );
         })}

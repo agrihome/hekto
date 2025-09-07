@@ -6,6 +6,8 @@
   align-items: center;
   font-size: 1.6rem;
   gap: 8rem;
+  max-width: 1920px;
+  margin-inline: auto;
 
   @media screen and (max-width: 1080px) {
     padding: 1rem 4rem;
@@ -35,8 +37,12 @@
     letter-spacing: 0rem;
     color: #101750;
 
-    .active-item {
-      color: #fb2e86;
+    .item {
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: #fb2e86;
+      }
     }
   }
 
@@ -52,7 +58,6 @@
     font-weight: 50;
     display: flex;
     border-radius: 0.8rem;
-    
 
     input {
       color: #8a8fb9;

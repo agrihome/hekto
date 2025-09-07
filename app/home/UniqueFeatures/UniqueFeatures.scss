@@ -4,8 +4,14 @@
   background-color: #f1f0ff;
   min-height: fit-content;
   place-content: center;
+  max-width: 160rem;
+  width: 100%;
+  padding: 10rem;
+  margin-inline: auto;
 
-  padding: 5% 10rem;
+  &__wrapper {
+    background-color: #f1f0ff;
+  }
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: 100%;
