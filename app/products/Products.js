@@ -2,6 +2,8 @@ import Product from "./Product";
 import { useContext } from "react";
 import { ProductsContext } from "./ProductsContext";
 
+// comment
+
 export default function Products({ ref }) {
   const { products, setCurrPage, pagesList, currPage } =
     useContext(ProductsContext);
