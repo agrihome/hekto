@@ -7,13 +7,10 @@ import "./produtDetail.scss";
 import Image from "next/image";
 import Button from "@/app/components/Button";
 import placeholder from "./placeholder.jpg";
-import JSXStyle from "styled-jsx/style";
 
 export default function ProductDetail() {
   let { product } = useParams();
   product = decodeURIComponent(product);
-
-  console.log(product);
 
   const { products } = useContext(ProductsContext);
 
@@ -57,7 +54,13 @@ export default function ProductDetail() {
   ];
 
   useEffect(() => {
-    setCart(JSON.parse(localStorage.getItem("cart") || []));
+    try {
+      const storedCart = localStorage.getItem("cart");
+      setCart(storedCart ? JSON.parse(storedCart) : []);
+    } catch (error) {
+      console.error("Failed to parse cart from localStorage:", error);
+      setCart([]);
+    }
   }, []);
 
   const tabs = ["Description", "Additional Info", "Reviews", "Video"];
@@ -65,6 +68,8 @@ export default function ProductDetail() {
   const [activeTab, setActiveTab] = useState(0);
 
   const currProduct = products.filter((item) => item.name == product)[0];
+
+  console.log(currProduct);
 
   return (
     <div className="dp">
@@ -228,31 +233,26 @@ export default function ProductDetail() {
         <h3>Related Products</h3>
 
         <div className="dp__products">
-          {products
-            .filter(
-              (item) =>
-                item.category == currProduct.category && item != currProduct
-            )
-            .map((product, index) => {
-              return (
-                <div key={product.name} className="dp__product">
-                  <div className="product__img-container">
-                    <Image
-                      src={product.img}
-                      alt={product.name}
-                      className="product__img"
-                    ></Image>
-                  </div>
-                  <div className="product__details">
-                    <p className="product__name label-bold">{product.name}</p>
-                    <p className="label-small">Code - Y52320{index + 1}</p>
-                    <p className="label-bold product__price">
-                      ${product.sellPrice}
-                    </p>
-                  </div>
+          {products.slice(0, 4).map((product, index) => {
+            return (
+              <div key={product.name} className="dp__product">
+                <div className="product__img-container">
+                  <Image
+                    src={product.img}
+                    alt={product.name}
+                    className="product__img"
+                  ></Image>
                 </div>
-              );
-            })}
+                <div className="product__details">
+                  <p className="product__name label-bold">{product.name}</p>
+                  <p className="label-small">Code - Y52320{index + 1}</p>
+                  <p className="label-bold product__price">
+                    ${product.sellPrice}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
