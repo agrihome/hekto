@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 // image imports
 import p1 from "./p1.jpg";
@@ -131,10 +130,10 @@ export const initialProducts = [
 ];
 
 export default function ProductsData({ children }) {
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  // const searchParams = useSearchParams();
+  // const category = searchParams.get("category");
 
-  const categoryArr = category ? [category] : [];
+  const categoryArr = [];
 
   const [filters, setFilters] = useState({
     discount: [],
