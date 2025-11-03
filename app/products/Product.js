@@ -1,44 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
-function handleCartClick(e, name, setAddedToCart) {
-  e.preventDefault();
-  console.log(name);
-
-  const stringCart = localStorage.getItem("cart");
-
-  let cart;
-  if (!stringCart) {
-    cart = [];
-  } else {
-    cart = JSON.parse(stringCart);
-  }
-
-  if (cart.filter((product) => product.name == name).length) {
-    let cartItem = cart.filter((product) => product.name == name)[0];
-    cartItem = { ...cartItem, qty: cartItem.qty + 1 };
-    console.log(cartItem);
-
-    cart = cart.filter((product) => product.name !== name);
-    cart = [...cart, cartItem];
-    console.log(cart);
-  } else {
-    cart.push({
-      name: name,
-      qty: 1,
-    });
-  }
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  setAddedToCart(true);
-}
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 export default function Product({
   product: { img, name, sellPrice, maxPrice, rating },
 }) {
+  const dispatch = useDispatch();
   const [addedToCart, setAddedToCart] = useState(false);
+
+  function handleCartClick(e) {
+    e.preventDefault();
+    dispatch(addToCart({ name }));
+    setAddedToCart(true);
+  }
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -111,7 +89,7 @@ export default function Product({
               viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              onClick={(e) => handleCartClick(e, name, setAddedToCart)}
+              onClick={handleCartClick}
             >
               <rect width="16" height="16" fill="white" />
               <path

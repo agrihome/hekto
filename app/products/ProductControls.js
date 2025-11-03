@@ -1,14 +1,19 @@
+"use client";
+
 import DropDown from "@/app/components/DropDown";
-import { useContext } from "react";
-import { ProductsContext } from "./ProductsContext";
+import { useDispatch } from "react-redux";
+import { setPerPage, setPriceSort } from "../store/productsSlice";
 
 export function PerPage() {
-  const { setPerPage } = useContext(ProductsContext);
+  const dispatch = useDispatch();
 
   return (
     <div className="per-page">
       Per Page
-      <DropDown options={[5, 10, 20]} setValue={setPerPage}>
+      <DropDown
+        options={[5, 10, 20]}
+        setValue={(value) => dispatch(setPerPage(value))}
+      >
         5
       </DropDown>
     </div>
@@ -16,14 +21,14 @@ export function PerPage() {
 }
 
 export function SortBy() {
-  const { setPriceSort } = useContext(ProductsContext);
+  const dispatch = useDispatch();
 
   return (
     <div className="sort-by">
       Sort By
       <DropDown
         options={["Price : Low - High", "Price : High - Low"]}
-        setValue={setPriceSort}
+        setValue={(value) => dispatch(setPriceSort(value))}
       ></DropDown>
     </div>
   );

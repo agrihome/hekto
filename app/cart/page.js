@@ -4,51 +4,33 @@ import Button from "../components/Button";
 import EmptyCart from "./EmptyCart.jpg";
 import Image from "next/image";
 import "./cart.scss";
-import { useEffect, useState, useRef, useContext } from "react";
-import ProductData, {
-  ProductsContext,
-  initialProducts,
-} from "../products/ProductsContext";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { initialProducts } from "../store/productsSlice";
 import CartItem from "./CartItems";
-
+import { updateQuantity, clearCart, loadCart } from "../store/cartSlice";
 import { useRouter } from "next/navigation";
 
 export default function Cart() {
-  const [cart, setCart] = useState([]);
-  const isFirstRender = useRef(true);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    dispatch(loadCart());
+  }, [dispatch]);
 
   const total =
-    cart.reduce((acc, product) => {
+    cartItems.reduce((acc, product) => {
       const productData = initialProducts.filter(
         (item) => item.name == product.name
       )[0];
-      acc += productData.sellPrice * product.qty;
-
+      if (productData) {
+        acc += productData.sellPrice * product.qty;
+      }
       return acc;
     }, 0) || 0;
-
-  useEffect(() => {
-    const storedCartString = localStorage.getItem("cart");
-
-    let storedCart;
-    if (!storedCartString) {
-      return;
-    } else {
-      storedCart = JSON.parse(storedCartString);
-    }
-
-    setCart(storedCart);
-  }, []);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
 
   function handleQtyChange(e) {
     e.preventDefault();
@@ -60,7 +42,9 @@ export default function Cart() {
     const data = el.dataset.change;
     const productName = e.currentTarget.dataset.name;
 
-    const product = cart.filter((product) => product.name == productName)[0];
+    const product = cartItems.find((item) => item.name == productName);
+
+    if (!product) return;
 
     let qty;
 
@@ -70,27 +54,12 @@ export default function Cart() {
       qty = product.qty + 1;
     }
 
-    if (qty == 0) {
-      setCart((prev) => {
-        return prev.filter((item) => item != product);
-      });
-
-      return;
-    }
-
-    setCart((prev) => {
-      const cartProducts = structuredClone(prev);
-
-      cartProducts.filter((item) => item.name == product.name)[0].qty = qty;
-
-      return cartProducts;
-    });
+    dispatch(updateQuantity({ name: productName, qty }));
   }
 
   return (
-    <ProductData>
-      <section className="cart">
-        {!cart.length && (
+    <section className="cart">
+        {!cartItems.length && (
           <div className="cart__empty">
             <Image
               className="cart__empty-img"
@@ -110,10 +79,10 @@ export default function Cart() {
           </div>
         )}
 
-        {!!cart.length && (
+        {!!cartItems.length && (
           <div className="cart__container">
             <div className="cart__content">
-              {cart.map((product, index) => {
+              {cartItems.map((product, index) => {
                 return (
                   <CartItem
                     productName={product.name}
@@ -152,7 +121,7 @@ export default function Cart() {
               <span
                 className="active cart__clear"
                 onClick={() => {
-                  setCart([]);
+                  dispatch(clearCart());
                 }}
               >
                 Clear cart
@@ -161,6 +130,5 @@ export default function Cart() {
           </div>
         )}
       </section>
-    </ProductData>
   );
 }

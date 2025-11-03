@@ -1,13 +1,15 @@
-import { useEffect, useContext } from "react";
-import ProductData, { ProductsContext } from "../products/ProductsContext";
+"use client";
+
+import { useSelector } from "react-redux";
+import { initialProducts } from "../store/productsSlice";
 import Image from "next/image";
 
 export default function CartItem({ productName, qty, handleQtyChange }) {
-  const { initialProducts } = useContext(ProductsContext);
+  const product = initialProducts.find((product) => product.name == productName);
 
-  const products = initialProducts;
-
-  const product = products.filter((product) => product.name == productName)[0];
+  if (!product) {
+    return null;
+  }
 
 
   return (

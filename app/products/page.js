@@ -4,13 +4,20 @@ import "./products.scss";
 import ProductControls from "./ProductControls";
 import ProductsFilter from "./ProductsFilter";
 import Products from "./Products";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
-import ProductsData from "./ProductsContext";
+import { useDispatch } from "react-redux";
+import { applyFilters } from "../store/productsSlice";
 
 export default function ProductsPage() {
+  const dispatch = useDispatch();
   const productsContainer = useRef();
   const productsFilter = useRef();
+
+  // Apply initial filters on mount
+  useEffect(() => {
+    dispatch(applyFilters());
+  }, [dispatch]);
 
   const handleViewChange = useCallback((e) => {
     if (productsContainer.current) {

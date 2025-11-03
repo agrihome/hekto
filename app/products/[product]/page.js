@@ -1,8 +1,10 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { ProductsContext } from "../ProductsContext";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { initialProducts } from "../../store/productsSlice";
+import { addToCart } from "../../store/cartSlice";
 import "./produtDetail.scss";
 import Image from "next/image";
 import Button from "@/app/components/Button";
@@ -12,64 +14,27 @@ export default function ProductDetail() {
   let { product } = useParams();
   product = decodeURIComponent(product);
 
-  const { products } = useContext(ProductsContext);
-
+  const dispatch = useDispatch();
   const router = useRouter();
+  const cartItems = useSelector((state) => state.cart.items);
+  const products = useSelector((state) => state.products.initialProducts);
 
-  const [cart, setCart] = useState([]);
+  const tabs = ["Description", "Additional Info", "Reviews", "Video"];
+  const [activeTab, setActiveTab] = useState(0);
+
+  const currProduct = products.find((item) => item.name == product);
+
+  if (!currProduct) {
+    return <div>Product not found</div>;
+  }
+
+  const isInCart = cartItems.some((item) => item.name == currProduct.name);
 
   function handleAddtoCart(e) {
     e.preventDefault();
-
-    let cartString = localStorage.getItem("cart");
-
-    let cart;
-
-    if (!cartString) {
-      cart = [];
-    } else {
-      cart = JSON.parse(cartString);
-    }
-
-    if (
-      cart.filter((product) => product.name == currProduct.name).length == 0
-    ) {
-      cart.push({
-        name: product,
-        qty: 1,
-      });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
+    dispatch(addToCart({ name: currProduct.name }));
     router.push("/cart");
   }
-
-  const details = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac quam dolor. In dignissim lectus sed nisl tempor, ac porttitor libero consectetur.",
-    "Cras ac quam dolor. In dignissim lectus sed nisl tempor, ac porttitor libero consectetur. Pellentesque diam dolor, tincidunt nec ante.",
-    "Pellentesque diam dolor, tincidunt nec ante congue, tincidunt facilisis tortor.",
-    "Mauris vitae massa molestie, sagittis ligula vel, egestas massa. Phasellus quis sodales augue. Donec nec ultricies diam.",
-    "Phasellus quis sodales augue. Integer feugiat odio ut dictum viverra.",
-  ];
-
-  useEffect(() => {
-    try {
-      const storedCart = localStorage.getItem("cart");
-      setCart(storedCart ? JSON.parse(storedCart) : []);
-    } catch (error) {
-      console.error("Failed to parse cart from localStorage:", error);
-      setCart([]);
-    }
-  }, []);
-
-  const tabs = ["Description", "Additional Info", "Reviews", "Video"];
-
-  const [activeTab, setActiveTab] = useState(0);
-
-  const currProduct = products.filter((item) => item.name == product)[0];
-
-  console.log(currProduct);
 
   return (
     <div className="dp">
@@ -141,9 +106,7 @@ export default function ProductDetail() {
 
           <div className="dp__actions">
             <Button onClick={handleAddtoCart}>
-              {cart.filter((product) => product.name == currProduct.name).length
-                ? "Already in cart"
-                : "Add to cart"}
+              {isInCart ? "Already in cart" : "Add to cart"}
             </Button>
             <svg
               width="32"
@@ -205,7 +168,13 @@ export default function ProductDetail() {
         <p className="title-medium">More details</p>
 
         <ul className="dp__more-list">
-          {details.map((para, index) => {
+          {[
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac quam dolor. In dignissim lectus sed nisl tempor, ac porttitor libero consectetur.",
+            "Cras ac quam dolor. In dignissim lectus sed nisl tempor, ac porttitor libero consectetur. Pellentesque diam dolor, tincidunt nec ante.",
+            "Pellentesque diam dolor, tincidunt nec ante congue, tincidunt facilisis tortor.",
+            "Mauris vitae massa molestie, sagittis ligula vel, egestas massa. Phasellus quis sodales augue. Donec nec ultricies diam.",
+            "Phasellus quis sodales augue. Integer feugiat odio ut dictum viverra.",
+          ].map((para, index) => {
             return (
               <li key={index} className="dp__more-item">
                 <svg

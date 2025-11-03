@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { ProductsContext } from "./ProductsContext";
+"use client";
 
-
+import { useSelector, useDispatch } from "react-redux";
+import { toggleFilter } from "../store/productsSlice";
 
 export default function ProductsFilterOptions({
   children,
@@ -9,22 +9,17 @@ export default function ProductsFilterOptions({
   category,
   rating,
 }) {
-  const { filters, handleFiltersChange } = useContext(ProductsContext);
+  const dispatch = useDispatch();
+  const filters = useSelector((state) => state.products.filters);
 
-  const isActive =
-    category != "rating"
-      ? filters[category]?.includes(children)
-      : filters[category]?.includes(rating);
+  const filterValue = category !== "rating" ? children : rating;
+  const isActive = filters[category]?.includes(filterValue);
 
   return (
     <span
       className="products__filter-option"
       onClick={() => {
-        if (category != "rating") {
-          handleFiltersChange(category, children);
-        } else {
-          handleFiltersChange(category, rating);
-        }
+        dispatch(toggleFilter({ type: category, payload: filterValue }));
       }}
     >
       <svg

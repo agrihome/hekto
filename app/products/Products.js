@@ -1,12 +1,15 @@
-import Product from "./Product";
-import { useContext } from "react";
-import { ProductsContext } from "./ProductsContext";
+"use client";
 
-// comment
+import Product from "./Product";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrPage } from "../store/productsSlice";
 
 export default function Products({ ref }) {
-  const { products, setCurrPage, pagesList, currPage } =
-    useContext(ProductsContext);
+  const dispatch = useDispatch();
+  const { products, pagesList, currPage } = useSelector(
+    (state) => state.products
+  );
+
   return (
     <div>
       <div className="products__container--1" ref={ref}>
@@ -25,7 +28,7 @@ export default function Products({ ref }) {
               currPage == page ? "products__pagination-item--active" : ""
             }`}
             key={page}
-            onClick={() => setCurrPage(page)}
+            onClick={() => dispatch(setCurrPage(page))}
           >
             {page}
           </span>

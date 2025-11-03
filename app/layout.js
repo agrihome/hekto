@@ -3,6 +3,7 @@ import "./typography.scss";
 import "./utils.scss";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import StoreProvider from "./store/StoreProvider";
 import { Lato, Josefin_Sans } from "next/font/google";
 
 const lato = Lato({
@@ -23,9 +24,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${lato.variable} ${josefinSans.variable}`}>
       <body>
-        <Header></Header>
-        {children}
-        <Footer></Footer>
+        <StoreProvider>
+          <Header></Header>
+          {children}
+          <Footer></Footer>
+        </StoreProvider>
       </body>
     </html>
   );
