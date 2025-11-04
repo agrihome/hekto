@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function TrendingProduct({
-  product: { img, price_main, price_sub, name },
+  product: { id, img, price_main, price_sub, name },
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +30,7 @@ export default function TrendingProduct({
   }
 
   return (
-    <Link href={`/products/${name}`}>
+    <Link href={`/products/${id}`}>
       <div className="tp__product">
         <Image
           src={img}

@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { initialProducts } from "../store/productsSlice";
 import Image from "next/image";
 
-export default function CartItem({ productName, qty, handleQtyChange }) {
-  const product = initialProducts.find((product) => product.name == productName);
+export default function CartItem({ productId, qty, handleQtyChange }) {
+  const product = initialProducts.find((product) => product.id === productId);
 
   if (!product) {
     return null;
@@ -31,7 +31,7 @@ export default function CartItem({ productName, qty, handleQtyChange }) {
       <div
         className="cart__item-qty"
         onClick={handleQtyChange}
-        data-name={product.name}
+        data-id={product.id}
       >
         <button className="change" data-change="-">
           -

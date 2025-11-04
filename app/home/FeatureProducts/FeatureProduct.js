@@ -1,43 +1,24 @@
+"use client";
+
 import "./FeatureProducts.scss";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/app/components/Button";
 import { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/cartSlice";
 
 export default function FeatureProduct({ isLoading, product }) {
+  const dispatch = useDispatch();
   const [addedToCart, setAddedToCart] = useState(false);
 
-  const handleAddtoCart = useCallback((e, setAddedToCart) => {
+  const handleAddtoCart = useCallback((e) => {
     e.preventDefault();
-
-    let cartString = localStorage.getItem("cart");
-    let cart;
-
-    let buttonEl = e.target.closest(".button--icon");
-
-    let productToCart = buttonEl.dataset.product;
-
-    if (!cartString) {
-      cart = [];
-    } else {
-      cart = JSON.parse(cartString);
+    if (product?.id) {
+      dispatch(addToCart({ id: product.id }));
+      setAddedToCart(true);
     }
-
-    if (cart.filter((product) => product.name == productToCart).length == 0) {
-      cart.push({
-        name: productToCart,
-        qty: 1,
-      });
-    } else {
-      let cartItem = cart.filter((product) => product.name == productToCart)[0];
-      cartItem = { ...cartItem, qty: cartItem.qty + 1 };
-      cart = cart.filter((product) => product.name !== productToCart);
-      cart = [...cart, cartItem];
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setAddedToCart(true);
-  }, []);
+  }, [dispatch, product]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -53,7 +34,7 @@ export default function FeatureProduct({ isLoading, product }) {
     <div className="fp__product">
       <div className="imgContainer">
         <Image className="img" src={product.img} alt={"product"} />
-        <Link href={`/products/${encodeURIComponent(product.name)}`}>
+        <Link href={`/products/${product.id}`}>
           <Button className="button--green button--fp">View Details</Button>
         </Link>
 
@@ -78,8 +59,7 @@ export default function FeatureProduct({ isLoading, product }) {
           ) : (
             <Button
               className="button--icon"
-              onClick={(e) => handleAddtoCart(e, setAddedToCart)}
-              data-product={product.name}
+              onClick={handleAddtoCart}
             >
               <svg
                 width="16"

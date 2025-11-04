@@ -11,28 +11,51 @@ import Button from "@/app/components/Button";
 import placeholder from "./placeholder.jpg";
 
 export default function ProductDetail() {
-  let { product } = useParams();
-  product = decodeURIComponent(product);
-
   const dispatch = useDispatch();
   const router = useRouter();
-  const cartItems = useSelector((state) => state.cart.items);
-  const products = useSelector((state) => state.products.initialProducts);
+  const cartItems = useSelector((state) => state.cart?.items || []);
 
+  const params = useParams();
+  const product = params?.product;
+
+  // Ensure initialProducts is available and is an array
+  const products = Array.isArray(initialProducts) ? initialProducts : [];
   const tabs = ["Description", "Additional Info", "Reviews", "Video"];
   const [activeTab, setActiveTab] = useState(0);
 
-  const currProduct = products.find((item) => item.name == product);
+  // Try to parse as ID first, then fallback to name matching (for backward compatibility)
+  let productId = product ? parseInt(product, 10) : null;
+  let currProduct = null;
 
-  if (!currProduct) {
-    return <div>Product not found</div>;
+  if (productId && !isNaN(productId) && productId > 0) {
+    // Try finding by ID
+    currProduct = products.find((item) => item && item.id === productId);
   }
 
-  const isInCart = cartItems.some((item) => item.name == currProduct.name);
+  // If not found by ID, try finding by name (backward compatibility)
+  if (!currProduct && product) {
+    const decodedName = decodeURIComponent(product);
+    currProduct = products.find((item) => item && item.name === decodedName);
+    if (currProduct) {
+      productId = currProduct.id;
+    }
+  }
+
+  // Early return if product not found
+  if (!currProduct) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center" }}>
+        <h2>Product not found</h2>
+        <p>The product you're looking for doesn't exist.</p>
+      </div>
+    );
+  }
+
+  const isInCart = cartItems.some((item) => item.id === currProduct.id);
 
   function handleAddtoCart(e) {
     e.preventDefault();
-    dispatch(addToCart({ name: currProduct.name }));
+    dispatch(addToCart({ id: currProduct.id }));
     router.push("/cart");
   }
 
@@ -202,26 +225,33 @@ export default function ProductDetail() {
         <h3>Related Products</h3>
 
         <div className="dp__products">
-          {products.slice(0, 4).map((product, index) => {
-            return (
-              <div key={product.name} className="dp__product">
-                <div className="product__img-container">
-                  <Image
-                    src={product.img}
-                    alt={product.name}
-                    className="product__img"
-                  ></Image>
-                </div>
-                <div className="product__details">
-                  <p className="product__name label-bold">{product.name}</p>
-                  <p className="label-small">Code - Y52320{index + 1}</p>
-                  <p className="label-bold product__price">
-                    ${product.sellPrice}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+          {products && products.length > 0
+            ? products
+                .filter((p) => p && p.id !== currProduct.id)
+                .slice(0, 4)
+                .map((product, index) => {
+                  return (
+                    <div key={product.id || index} className="dp__product">
+                      <div className="product__img-container">
+                        <Image
+                          src={product.img || placeholder}
+                          alt={product.name || "Product"}
+                          className="product__img"
+                        ></Image>
+                      </div>
+                      <div className="product__details">
+                        <p className="product__name label-bold">
+                          {product.name || "Product"}
+                        </p>
+                        <p className="label-small">Code - Y52320{index + 1}</p>
+                        <p className="label-bold product__price">
+                          ${product.sellPrice || 0}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+            : null}
         </div>
       </div>
     </div>

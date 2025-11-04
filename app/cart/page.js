@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 export default function Cart() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart?.items || []);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -23,9 +23,9 @@ export default function Cart() {
 
   const total =
     cartItems.reduce((acc, product) => {
-      const productData = initialProducts.filter(
-        (item) => item.name == product.name
-      )[0];
+      const productData = initialProducts.find(
+        (item) => item.id === product.id
+      );
       if (productData) {
         acc += productData.sellPrice * product.qty;
       }
@@ -40,9 +40,9 @@ export default function Cart() {
     if (!el) return;
 
     const data = el.dataset.change;
-    const productName = e.currentTarget.dataset.name;
+    const productId = parseInt(e.currentTarget.dataset.id);
 
-    const product = cartItems.find((item) => item.name == productName);
+    const product = cartItems.find((item) => item.id === productId);
 
     if (!product) return;
 
@@ -54,7 +54,7 @@ export default function Cart() {
       qty = product.qty + 1;
     }
 
-    dispatch(updateQuantity({ name: productName, qty }));
+    dispatch(updateQuantity({ id: productId, qty }));
   }
 
   return (
@@ -85,9 +85,9 @@ export default function Cart() {
               {cartItems.map((product, index) => {
                 return (
                   <CartItem
-                    productName={product.name}
+                    productId={product.id}
                     qty={product.qty}
-                    key={index}
+                    key={product.id}
                     handleQtyChange={handleQtyChange}
                   ></CartItem>
                 );

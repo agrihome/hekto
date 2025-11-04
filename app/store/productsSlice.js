@@ -14,6 +14,7 @@ import p10 from "../products/p10.png";
 
 export const initialProducts = [
   {
+    id: 1,
     name: "Watches",
     brand: "Casio",
     category: "Watches",
@@ -24,6 +25,7 @@ export const initialProducts = [
     img: p1,
   },
   {
+    id: 2,
     name: "Headphones",
     brand: "Sony",
     category: "Headphones",
@@ -34,6 +36,7 @@ export const initialProducts = [
     img: p2,
   },
   {
+    id: 3,
     name: "Laptop",
     brand: "Apple",
     category: "Laptop",
@@ -44,6 +47,7 @@ export const initialProducts = [
     img: p3,
   },
   {
+    id: 4,
     name: "Black Watches",
     brand: "Casio",
     category: "Watches",
@@ -54,6 +58,7 @@ export const initialProducts = [
     img: p4,
   },
   {
+    id: 5,
     name: "Game Console",
     brand: "Sony",
     category: "Game Console",
@@ -64,6 +69,7 @@ export const initialProducts = [
     img: p5,
   },
   {
+    id: 6,
     name: "Shoes",
     brand: "Vke",
     category: "Clothe",
@@ -74,6 +80,7 @@ export const initialProducts = [
     img: p6,
   },
   {
+    id: 7,
     name: "Perfume",
     brand: "Glossiness",
     category: "Clothe",
@@ -84,6 +91,7 @@ export const initialProducts = [
     img: p9,
   },
   {
+    id: 8,
     name: "Present Box",
     brand: "Glossiness",
     category: "Clothe",
@@ -94,6 +102,7 @@ export const initialProducts = [
     img: p8,
   },
   {
+    id: 9,
     name: "Bracelet",
     brand: "Vke",
     category: "Clothe",
@@ -104,6 +113,7 @@ export const initialProducts = [
     img: p7,
   },
   {
+    id: 10,
     name: "Ring",
     brand: "Vke",
     category: "Clothe",
@@ -127,8 +137,8 @@ const initialState = {
   priceSort: "Low - High",
   perPage: 5,
   currPage: 1,
-  filteredProducts: initialProducts,
-  products: initialProducts.slice(0, 5),
+  filteredProducts: structuredClone(initialProducts),
+  products: structuredClone(initialProducts).slice(0, 5),
   pagesList: [1],
 };
 
@@ -139,7 +149,7 @@ const productsSlice = createSlice({
     toggleFilter: (state, action) => {
       const { type, payload } = action.payload;
       const currentFilters = state.filters[type];
-      
+
       if (currentFilters.includes(payload)) {
         state.filters[type] = currentFilters.filter((val) => val !== payload);
       } else {
@@ -148,7 +158,7 @@ const productsSlice = createSlice({
 
       // Reset to page 1 when filters change
       state.currPage = 1;
-      
+
       // Recalculate filtered products
       productsSlice.caseReducers.applyFilters(state);
     },
@@ -199,9 +209,9 @@ const productsSlice = createSlice({
 
       // Apply price filter
       if (state.filters.price.length) {
-        const numbers = (state.filters.price.join(" ").match(/\b\d+\b/g) || []).map(
-          Number
-        );
+        const numbers = (
+          state.filters.price.join(" ").match(/\b\d+\b/g) || []
+        ).map(Number);
         const min = Math.min(...numbers);
         const max = Math.max(...numbers);
 
@@ -230,8 +240,12 @@ const productsSlice = createSlice({
   },
 });
 
-export const { toggleFilter, setPriceSort, setPerPage, setCurrPage, applyFilters } =
-  productsSlice.actions;
+export const {
+  toggleFilter,
+  setPriceSort,
+  setPerPage,
+  setCurrPage,
+  applyFilters,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;
-

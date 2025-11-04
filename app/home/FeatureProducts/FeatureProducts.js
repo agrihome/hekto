@@ -6,34 +6,23 @@ import Fp2 from "./fp2.png";
 import Fp3 from "./fp3.png";
 import Fp4 from "./fp4.png";
 import { useState, useEffect, useCallback } from "react";
+import { initialProducts } from "../../store/productsSlice";
 
 export default function FeatureProducts() {
-  const products = [
-    {
-      name: "Watches",
-      code: "Code - Y523201",
-      price: "$52.00",
-      img: Fp1,
-    },
-    {
-      name: "Headphones",
-      code: "Code - Y523201",
-      price: "$90.00",
-      img: Fp2,
-    },
-    {
-      name: "Laptop",
-      code: "Code - Y523201",
-      price: "$3 400.00",
-      img: Fp3,
-    },
-    {
-      name: "Black Watches",
-      code: "Code - Y523201",
-      price: "$35.00",
-      img: Fp4,
-    },
-  ];
+  const productNames = ["Watches", "Headphones", "Laptop", "Black Watches"];
+  const productImages = [Fp1, Fp2, Fp3, Fp4];
+  
+  // Map to actual products with IDs from the slice
+  const products = productNames.map((name, index) => {
+    const product = initialProducts.find((p) => p.name === name);
+    return product ? {
+      id: product.id,
+      name: product.name,
+      code: `Code - Y52320${index + 1}`,
+      price: `$${product.sellPrice}`,
+      img: productImages[index] || product.img,
+    } : null;
+  }).filter(Boolean);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -54,7 +43,7 @@ export default function FeatureProducts() {
         {products.map((product) => {
           return (
             <FeatureProduct
-              key={product.name}
+              key={product.id}
               isLoading={isLoading}
               product={product}
             ></FeatureProduct>

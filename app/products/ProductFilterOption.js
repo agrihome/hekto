@@ -10,10 +10,10 @@ export default function ProductsFilterOptions({
   rating,
 }) {
   const dispatch = useDispatch();
-  const filters = useSelector((state) => state.products.filters);
+  const filters = useSelector((state) => state.products?.filters || {});
 
   const filterValue = category !== "rating" ? children : rating;
-  const isActive = filters[category]?.includes(filterValue);
+  const isActive = filters[category]?.includes(filterValue) || false;
 
   return (
     <span

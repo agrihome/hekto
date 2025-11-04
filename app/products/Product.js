@@ -7,14 +7,14 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
 export default function Product({
-  product: { img, name, sellPrice, maxPrice, rating },
+  product: { id, img, name, sellPrice, maxPrice, rating },
 }) {
   const dispatch = useDispatch();
   const [addedToCart, setAddedToCart] = useState(false);
 
   function handleCartClick(e) {
     e.preventDefault();
-    dispatch(addToCart({ name }));
+    dispatch(addToCart({ id }));
     setAddedToCart(true);
   }
 
@@ -26,12 +26,12 @@ export default function Product({
 
   return (
     <div className="product__card">
-      <Link href={`/products/${name}`}>
+      <Link href={`/products/${id}`}>
         <Image src={img} alt={name} className="product__img"></Image>
       </Link>
 
       <div className="product__details">
-        <Link href={`/products/${name}`}>
+        <Link href={`/products/${id}`}>
           <div className="product__name title-small">{name}</div>{" "}
         </Link>
 
@@ -120,7 +120,7 @@ export default function Product({
               fill="#7E33E0"
             />
           </svg>
-          <Link href={`/products/${name}`}>
+          <Link href={`/products/${id}`}>
             <svg
               width="16"
               height="16"
